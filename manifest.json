@@ -1,0 +1,10 @@
+{
+	"name": "chromeStorage test suite",
+	"version": "0.1",
+	"manifest_version": 2,
+	"description": "Test suite for chromeStorage. Open 'options' to run tests.",
+	"options_page": "test.html",
+	"permissions": [
+		"storage"
+	]
+}
