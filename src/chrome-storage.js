@@ -28,7 +28,7 @@
 			return self.localStorage.getItem ( key );
 		};
 
-		this._getItemByKeyList = function ( keyList ) {
+		this._getItemByArray = function ( keyList ) {
 			var results = {};
 			for ( k in keyList ) {
 				// TODO: check how chrome handles non existing keys
@@ -56,15 +56,13 @@
 	ChromeStorage.prototype.getItem = function ( key ) {
 		var keyType = this._getKeyType ( key );
 
-		if ( keyType === 'string' ) {
-			return this._getItemByString ( key );
-		} else if ( keyType === 'array' ) {
-			return this._getItemByKeyList ( key );
-		} else if ( keyType === 'dictionary' ) {
-			return this._getItemByDictionary ( key );
-		}
+		try {
+			keyType = keyType.charAt ( 0 ).toUpperCase () + keyType.substr ( 1 );
 
-		throw new TypeError ( 'key is not a string, array or a dictionary' );
+			return this['_getItemBy' + keyType] ( key );
+		} catch ( e ) {
+			throw new TypeError ( 'key is not a string, array or a dictionary' );
+		}
 	};
 
 	ChromeStorage.prototype.setItem = function ( key, value ) {
